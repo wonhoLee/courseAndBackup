@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.wonho.tutorial2.MainActivity">
+
+    <EditText
+        android:id="@+id/number1"
+        android:layout_width="297dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="첫 번째 숫자"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <EditText
+        android:id="@+id/number2"
+        android:layout_width="296dp"
+        android:layout_height="54dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/number1"
+        android:ems="10"
+        android:hint="두 번째 숫자"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="46dp" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/number2"
+        android:layout_marginTop="29dp"
+        android:onClick="addClick"
+        android:text="더하기"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <Button
+        android:id="@+id/subtractButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addButton"
+        android:layout_alignBottom="@+id/addButton"
+        android:layout_toEndOf="@+id/addButton"
+        android:layout_toRightOf="@+id/addButton"
+        android:onClick="subtractClick"
+        android:text="빼기"
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <Button
+        android:id="@+id/multiplyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subtractButton"
+        android:layout_alignBottom="@+id/subtractButton"
+        android:layout_toEndOf="@+id/subtractButton"
+        android:layout_toRightOf="@+id/subtractButton"
+        android:onClick="multiplyClick"
+        android:text="곱하기"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <Button
+        android:id="@+id/divideButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/multiplyButton"
+        android:layout_alignBottom="@+id/multiplyButton"
+        android:layout_toEndOf="@+id/multiplyButton"
+        android:layout_toRightOf="@+id/multiplyButton"
+        android:onClick="divideClick"
+        android:text="나누기"
+        tools:layout_editor_absoluteX="265dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="351dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="154dp" />
+
+</RelativeLayout>
