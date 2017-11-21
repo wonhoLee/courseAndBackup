@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -144,5 +145,18 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private long lastTimeBackPressed;
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() - lastTimeBackPressed < 1500){
+            finish();
+            return;
+        }
+        Toast.makeText(this, "뒤로 버튼을 한번 더 눌러 종료합니다.", Toast.LENGTH_SHORT);
+        lastTimeBackPressed = System.currentTimeMillis();
+
     }
 }
