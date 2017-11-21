@@ -1,5 +1,7 @@
 package com.example.wonho.registeration;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.renderscript.ScriptGroup;
 import android.support.v4.app.FragmentManager;
@@ -28,11 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private ListView noticeListView;
     private NoticeListAdapter adapter;
     private List<Notice> noticeList;
+    public static String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        userID = getIntent().getStringExtra("userID");
 
         noticeListView = (ListView) findViewById(R.id.noticeListView);
         noticeList = new ArrayList<Notice>();

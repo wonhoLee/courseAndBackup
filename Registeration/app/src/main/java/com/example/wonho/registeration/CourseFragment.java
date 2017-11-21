@@ -158,7 +158,7 @@ public class CourseFragment extends Fragment {
 
         courseListView = (ListView) getView().findViewById(R.id.courseListView);
         courseList = new ArrayList<Course>();
-        adapter = new CourseListAdapter(getContext().getApplicationContext(), courseList);
+        adapter = new CourseListAdapter(getContext().getApplicationContext(), courseList, this);
         courseListView.setAdapter(adapter);
 
         Button searchButton = (Button) getView().findViewById(R.id.searchButton);
@@ -292,7 +292,7 @@ public class CourseFragment extends Fragment {
                 if(count == 0){
                     AlertDialog dialog;
                     AlertDialog.Builder builder = new AlertDialog.Builder(CourseFragment.this.getActivity());
-                    dialog = builder.setMessage("조회된 강의가 없습니다.")
+                    dialog = builder.setMessage("조회된 강의가 없습니다.\n날짜를 확인하세요.")
                             .setPositiveButton("확인", null)
                             .create();
                     dialog.show();

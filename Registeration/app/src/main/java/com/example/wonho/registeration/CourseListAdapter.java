@@ -1,10 +1,19 @@
 package com.example.wonho.registeration;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -15,10 +24,12 @@ import java.util.List;
 public class CourseListAdapter extends BaseAdapter {
     private Context context;
     private List<Course> courseList;
+    private Fragment parent;
 
-    public CourseListAdapter(Context context, List<Course> courseList) {
+    public CourseListAdapter(Context context, List<Course> courseList, Fragment parent) {
         this.context = context;
         this.courseList = courseList;
+        this.parent = parent;
     }
 
     @Override
@@ -37,7 +48,7 @@ public class CourseListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.notice, null);
         TextView courseGrade = (TextView) v.findViewById(R.id.courseGrade);
         TextView courseTitle = (TextView) v.findViewById(R.id.courseTitle);
@@ -60,10 +71,51 @@ public class CourseListAdapter extends BaseAdapter {
         }else{
             coursePersonnel.setText("제한 인원 : " + courseList.get(i).getCoursePersonnel() + "명");
         }
-        courseProfessor.setText(courseList.get(i).getCourseProfessor() + "교수님");
+        if(courseList.get(i).getCourseProfessor().equals("")){
+            courseProfessor.setText("개인 연구");
+        }else{
+            courseProfessor.setText(courseList.get(i).getCourseProfessor() + "교수님");
+        }
+
         courseTime.setText(courseList.get(i).getCourseTime() + "");
 
         v.setTag(courseList.get(i).getCourseID());
+
+        Button addButton = (Button) v.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userID = MainActivity.userID;
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getActivity());
+                                AlertDialog dialog = builder.setMessage("강의가 추가되었습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create();
+                                dialog.show();
+                            }else{
+                                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getActivity());
+                                AlertDialog dialog = builder.setMessage("강의추가에 실패했습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create();
+                                dialog.show();
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                AddRequest addRequest = new AddRequest(userID, courseList.get(i).getCourseID() + "", responseListener);
+                RequestQueue queue = Volley.newRequestQueue(parent.getActivity());
+                queue.add(addRequest);
+            }
+        });
         return v;
     }
 
