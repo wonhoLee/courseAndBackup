@@ -8,4 +8,47 @@
         <item>음악과</item>
         <item>커피과</item>
     </string-array>
+
+    <string-array name="year">
+        <item>2016년도</item>
+        <item>2017년도</item>
+        <item>2018년도</item>
+        <item>2019년도</item>
+        <item>2020년도</item>
+        <item>2021년도</item>
+    </string-array>
+
+    <string-array name="term">
+        <item>1학기</item>
+        <item>여름학기</item>
+        <item>2학기</item>
+        <item>겨울학기</item>
+    </string-array>
+
+    <string-array name="graduateArea">
+        <item>일반대학원</item>
+    </string-array>
+
+    <string-array name="universityArea">
+        <item>교양및기타</item>
+        <item>전공 </item>
+    </string-array>
+
+    <string-array name="graduateMajor">
+        <item>컴퓨터교육</item>
+        <item>미술교육</item>
+        <item>음악교육</item>
+    </string-array>
+
+    <string-array name="universityRefinementMajor">
+        <item>교양군사</item>
+        <item>교양이론</item>
+    </string-array>
+
+    <string-array name="universityMajor">
+        <item>전공유아</item>
+        <item>전공컴공</item>
+        <item>전공초등</item>
+        <item>전공기술</item>
+    </string-array>
 </resources>
