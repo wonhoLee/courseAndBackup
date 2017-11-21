@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,6 +27,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -89,9 +92,10 @@ public class CourseFragment extends Fragment {
     private Spinner majorSpinner;
 
     private String courseUniversity = "";
-    private String courseYear = "";
-    private String courseTerm = "";
-    private String courseArea = "";
+
+    private ListView courseListView;
+    private CourseListAdapter adapter;
+    private List<Course> courseList;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -151,6 +155,11 @@ public class CourseFragment extends Fragment {
 
             }
         });
+
+        courseListView = (ListView) getView().findViewById(R.id.courseListView);
+        courseList = new ArrayList<Course>();
+        adapter = new CourseListAdapter(getContext().getApplicationContext(), courseList);
+        courseListView.setAdapter(adapter);
 
         Button searchButton = (Button) getView().findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -240,12 +249,55 @@ public class CourseFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             try{
-                AlertDialog dialog;
-                AlertDialog.Builder builder = new AlertDialog.Builder(CourseFragment.this, getContext());
-                dialog = builder.setMessage(result)
-                        .setPositiveButton("확인", null)
-                        .create();
-                dialog.show();
+                courseList.clear();
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+
+                int courseID;
+                String courseUniversity;
+                int courseYear;
+                String courseTerm;
+                String courseArea;
+                String courseMajor;
+                String courseGrade;
+                String courseTitle;
+                int courseCredit;
+                int courseDivide;
+                int coursePersonnel;
+                String courseProfessor;
+                String courseTime;
+                String courseRoom;
+
+                while (count < jsonArray.length()){
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    courseID = object.getInt("courseID");
+                    courseUniversity = object.getString("courseUniversity");
+                    courseYear = object.getInt("courseYear");
+                    courseTerm = object.getString("courseTerm");
+                    courseArea= object.getString("courseArea");
+                    courseMajor = object.getString("courseMajor");
+                    courseGrade= object.getString("courseGrade");
+                    courseTitle= object.getString("courseTitle");
+                    courseCredit = object.getInt("courseCredit");
+                    courseDivide = object.getInt("courseDivide");
+                    coursePersonnel = object.getInt("coursePersonnel");
+                    courseProfessor = object.getString("courseProfessor");
+                    courseTime = object.getString("courseTime");
+                    courseRoom = object.getString("courseRoom");
+                    Course course = new Course(courseID, courseUniversity, courseYear, courseTerm, courseArea, courseMajor, courseGrade, courseTitle, courseCredit, courseDivide, coursePersonnel, courseProfessor, courseTime, courseRoom);
+                    courseList.add(course);
+                    count++;
+                }
+                if(count == 0){
+                    AlertDialog dialog;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CourseFragment.this.getActivity());
+                    dialog = builder.setMessage("조회된 강의가 없습니다.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                }
+                adapter.notifyDataSetChanged();
             }catch(Exception e){
                 e.printStackTrace();
             }
